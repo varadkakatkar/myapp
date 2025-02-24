@@ -1,19 +1,35 @@
+import React, { useState, useCallback } from "react";
 import Button from "./Button";
 import Title from "./Title";
 import Count from "./Count";
-import { useState,useMemo, useCallback } from "react";
 
 const ParentComponent = () =>{
     const [age,setAge] = useState(25);
     const [salary,setSalary] = useState(50000);
 
     const incrementAge = useCallback(() =>{
-        setAge( age+1)
-    },[age])
+        setAge(prevAge => prevAge + 1);
+    }, []);
 
    const incrementSalary = useCallback(() => {
-        setSalary(salary +1000);
-    },[salary])
+        setSalary(prevSalary => prevSalary + 1000);
+    }, []);
+
+    const AgeButton = React.memo(({ onClick }) => (
+        <Button handleClick={onClick}>Increment Age</Button>
+    ));
+
+    const SalaryButton = React.memo(({ onClick }) => (
+        <Button handleClick={onClick}>Increment Salary</Button>
+    ));
+
+    const AgeCount = React.memo(({ count }) => (
+        <Count text="Age" count={count} />
+    ));
+
+    const SalaryCount = React.memo(({ count }) => (
+        <Count text="Salary" count={count} />
+    ));
 
     return (
         <div style={{ display: 'flex',
@@ -27,10 +43,10 @@ const ParentComponent = () =>{
             maxWidth: '500px',
             margin: '40px auto'}}>
            <Title/>
-           <Count text={'Age'} count={age} />
-           <Button handleClieck={incrementAge} > Increment Age </Button>
-           <Count text={'Salary'} count={salary} />
-           <Button handleClieck={incrementSalary} > Increment Salary </Button>
+           <AgeCount count={age} />
+           <AgeButton onClick={incrementAge} />
+           <SalaryCount count={salary} />
+           <SalaryButton onClick={incrementSalary} />
         </div>
     )
 }
