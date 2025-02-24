@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './Home.css';
 
 const ToDo = () => {
@@ -6,7 +6,7 @@ const ToDo = () => {
   const [skip, setSkip] = useState(0);
   const [total, setTotal] = useState(0);
   const [newTodo, setNewTodo] = useState('');
-
+  const limit = 20;
   useEffect(() => {
     fetchTodos();
   }, [skip]);
@@ -18,9 +18,9 @@ const ToDo = () => {
     setTodos(prev => [...prev, ...data.todos]);
   };
 
-  const handleLoadMore = () => {
+  const handleLoadMore = useCallback(() => {
     setSkip(prev => prev + 20);
-  };
+  },[limit]);
 
   const deleteTodo = (id) => {
     setTodos(prev => prev.filter(todo => todo.id !== id));
@@ -38,11 +38,12 @@ const ToDo = () => {
     if (newTodo.trim() === '') return;
 
     setTodos(prev => {
-        if(prev.some(todo => todo.todo === newTodo)) {
+        if(prev.some(todo => todo.todo.toLowerCase() === newTodo.toLowerCase())) {
+          alert(`${newTodo} already exists`)
             return prev; // Return previous state if duplicate exists
         }
         const newTodoItem = { id: prev.length + 1, todo: newTodo, completed: false };
-        return [...prev, newTodoItem];
+        return [newTodoItem,...prev];
     });
     setNewTodo('');
    };
