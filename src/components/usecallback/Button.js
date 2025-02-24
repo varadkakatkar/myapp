@@ -1,5 +1,7 @@
 const Button = ({ handleClieck, children, style }) => {
+    console.log('Button children ',children)
     return (
+
         <button 
             onClick={handleClieck}
             style={{

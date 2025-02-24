@@ -1,4 +1,5 @@
 const Title = () => {
+    console.log('rendering title');
     return (
         <div style={{
             fontSize: '1.8rem',
