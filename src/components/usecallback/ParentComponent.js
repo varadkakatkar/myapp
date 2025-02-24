@@ -16,13 +16,21 @@ const ParentComponent = () =>{
     }
 
     return (
-        <div style={{display:'flex',textAlign:'center'}}>
+        <div style={{ display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '30px',
+            padding: '40px',
+            backgroundColor: '#f5f5f5',
+            borderRadius: '12px',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+            maxWidth: '500px',
+            margin: '40px auto'}}>
            <Title/>
            <Count text={'Age'} count={age} />
            <Button handleClieck={incrementAge} > Increment Age </Button>
            <Count text={'Salary'} count={salary} />
            <Button handleClieck={incrementSalary} > Increment Age </Button>
-
         </div>
     )
 }
