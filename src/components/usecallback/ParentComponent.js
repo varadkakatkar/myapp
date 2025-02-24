@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import Button from "./Button";
 import Title from "./Title";
 import Count from "./Count";
@@ -15,21 +15,13 @@ const ParentComponent = () =>{
         setSalary(prevSalary => prevSalary + 1000);
     }, []);
 
-    const AgeButton = React.memo(({ onClick }) => (
-        <Button handleClick={onClick}>Increment Age</Button>
-    ));
+    const AgeCount = useMemo(() => (
+        <Count text="Age" count={age} />
+    ), [age]);
 
-    const SalaryButton = React.memo(({ onClick }) => (
-        <Button handleClick={onClick}>Increment Salary</Button>
-    ));
-
-    const AgeCount = React.memo(({ count }) => (
-        <Count text="Age" count={count} />
-    ));
-
-    const SalaryCount = React.memo(({ count }) => (
-        <Count text="Salary" count={count} />
-    ));
+    const SalaryCount = useMemo(() => (
+        <Count text="Salary" count={salary} />
+    ), [salary]);
 
     return (
         <div style={{ display: 'flex',
@@ -43,10 +35,10 @@ const ParentComponent = () =>{
             maxWidth: '500px',
             margin: '40px auto'}}>
            <Title/>
-           <AgeCount count={age} />
-           <AgeButton onClick={incrementAge} />
-           <SalaryCount count={salary} />
-           <SalaryButton onClick={incrementSalary} />
+           {AgeCount}
+           <Button handleClick={incrementAge}>Increment Age</Button>
+           {SalaryCount}
+           <Button handleClick={incrementSalary}>Increment Salary</Button>
         </div>
     )
 }

@@ -1,9 +1,10 @@
-const Button = ({ handleClieck, children, style }) => {
-    console.log('Button children ',children)
-    return (
+import React from 'react';
 
+const Button = ({ handleClick, children, style }) => {
+    console.log('Button Rendered');
+    return (
         <button 
-            onClick={handleClieck}
+            onClick={handleClick}
             style={{
                 padding: '12px 24px',
                 fontSize: '1rem',
@@ -23,7 +24,7 @@ const Button = ({ handleClieck, children, style }) => {
         >
             {children}
         </button>
-    )
-}
+    );
+};
 
-export default Button;
+export default React.memo(Button);
